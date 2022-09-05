@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const cTable = require('console.table');
 const inquirer = require('inquirer');
 
-// Connect to database
+// Database constant
 const db = mysql.createConnection({
     host: 'localhost',
     port: 3306,
