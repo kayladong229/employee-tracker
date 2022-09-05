@@ -54,6 +54,9 @@ const startApp = () => {
         case 'Add An Employee':
           addEmployee();
           break;
+        case 'Update Employee Role':
+          updateEmployee();
+          break;
       }
     })
 };
@@ -103,7 +106,6 @@ const addDepartment = () => {
     viewDepartments();
     })
   })
-  startApp();
 };
 
 // // Function to add a role
@@ -156,7 +158,6 @@ const addRole = () => {
         console.log(`\nSuccessfully added ${answer.roleName} to the role table.\n`);
         // Log updated role table to console
         viewRoles();
-        startApp();
         })
       })
     })
