@@ -36,13 +36,13 @@ const startApp = () => {
     .prompt([
       {
         type: 'list',
-        name: 'prompt',
+        name: 'choice',
         message: 'What would you like to do? Press CTRL + C to exit this application.',
         choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add A Role', 'View All Departments', 'Add A Department']
       },
   ])
   .then ((answer) => {
-    switch(answer.prompt) {
+    switch(answer.choice) {
       case 'View All Employees':
         viewEmployees();
         break;
