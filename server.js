@@ -188,7 +188,7 @@ const addEmployee = () => {
         return;
       }
       const roles = result.map(({ id, title }) => ({ name: title, value: id }));
-      console.log(roles);
+      // console.log(roles);
 
       return inquirer
         .prompt([
@@ -209,7 +209,7 @@ const addEmployee = () => {
               return;
             }
             const managers = result.map(({ id, first_name, last_name }) => ({ name: first_name + " " + last_name, value: id }));
-            console.log(managers);
+            // console.log(managers);
 
             return inquirer
               .prompt([
@@ -252,7 +252,7 @@ const updateEmployee = () => {
       return;
     }
   const employees = result.map(({ id, first_name, last_name }) => ({ name: first_name + " " + last_name, value: id }))
-  console.log(employees);
+  // console.log(employees);
 
   return inquirer
   .prompt([
@@ -274,7 +274,7 @@ const updateEmployee = () => {
         return;
       }
       const roles = result.map(({ id, title}) => ({ name: title, value: id}));
-      console.log(roles)
+      // console.log(roles)
 
       return inquirer
       .prompt([
