@@ -163,8 +163,7 @@ const addRole = () => {
     })
 };
 
-
-// // Function to add an employee
+// Function to add an employee
 const addEmployee = () => {
   return inquirer
   .prompt([
