@@ -231,7 +231,7 @@ const addEmployee = () => {
                     console.log("An error has occurred.");
                     return;
                   }
-                  console.log(`Successfully added ${answer.firstName} ${answer.lastName} to the employee table.`);
+                  console.log(`Successfully added new employee to the employee table.`);
                   viewEmployees();
                 })
               })
@@ -240,3 +240,67 @@ const addEmployee = () => {
     })
   })
 };
+
+// Function to update an employee's information
+const updateEmployee = () => {
+  db.query('SELECT * FROM employee', (err, result) => {
+    if (err) {
+      console.log("An error has occurred.");
+      return;
+    }
+  const employees = result.map(({ id, first_name, last_name }) => ({ name: first_name + " " + last_name, value: id }))
+  console.log(employees);
+
+  return inquirer
+  .prompt([
+    {
+      type: 'list',
+      name: 'employee',
+      message: 'Which employee do you wish to update?',
+      choices: employees
+    }
+  ])
+  .then(answer => {
+    let params = [];
+    const employee = answer.employee;
+    params.push(employee);
+
+    db.query('SELECT * FROM role', (err, result) => {
+      if(err) {
+        console.log("An error has occurred.");
+        return;
+      }
+      const roles = result.map(({ id, title}) => ({ name: title, value: id}));
+      console.log(roles)
+
+      return inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'role',
+          message: "What is the employee's new role?",
+          choices: roles
+        }
+      ])
+      .then(answer => {
+        const role = answer.role;
+        params.push(role);
+
+        let employee = params[0];
+        params[0] = role;
+        params[1] = employee;
+        console.log(params);
+
+        db.query('UPDATE employee SET role_id = ? WHERE id = ?', params, (err, result) => {
+        if (err) {
+          console.log("An error has occurred.");
+          return;
+        }
+        console.log("Employee information has been successfully updated.");
+        viewEmployees();
+      })
+      })
+    })
+  })
+  })
+}
