@@ -6,4 +6,4 @@ A video tutorial has also been created for this application which is linked belo
 Application screenshot:
 ![Application Preview](./Assets/Screen%20Shot%202022-09-05%20at%207.40.12%20PM.png)
 
-Tutorial link: https://drive.google.com/file/d/1eGkqfvwNZD7rwkD2l0XhCgCBg1Zl2oJI/view
+Tutorial link: https://drive.google.com/file/d/1RBaU8xZImM-5jy6346CZ341pmNdKIRVR/view
