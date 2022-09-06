@@ -63,7 +63,7 @@ const startApp = () => {
 
 // Function to view all departments
 const viewDepartments = () => {
-  db.query("SELECT * FROM department", function(err, results) {
+  db.query("SELECT * FROM department", (err, results) => {
     console.table('\nAll departments: ', results);
     startApp();
   })
@@ -71,7 +71,7 @@ const viewDepartments = () => {
 
 // Function to view all roles
 const viewRoles = () => {
-  db.query("SELECT * FROM role", function(err, results) {
+  db.query("SELECT * FROM role", (err, results) => {
     console.table('\nAll roles: ', results);
     startApp();
   })
@@ -79,7 +79,7 @@ const viewRoles = () => {
 
 // // Function to view all employees
 const viewEmployees = () => {
-  db.query("SELECT * FROM employee", function(err, results) {
+  db.query("SELECT * FROM employee", (err, results) => {
     console.table('\nAll employees: ', results);
     startApp();
   })
