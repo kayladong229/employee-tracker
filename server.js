@@ -202,7 +202,7 @@ const addEmployee = () => {
         .then (answer => {
           const role = answer.role;
           params.push(role);
-
+          // Acquire employees from employee table
           db.query('SELECT * FROM employee WHERE manager_id IS NULL', (err, result) => {
             if (err) {
               console.log("An error has occurred.");
@@ -231,7 +231,7 @@ const addEmployee = () => {
                     console.log("An error has occurred.");
                     return;
                   }
-                  console.log(`Successfully added new employee to the employee table.`);
+                  console.log(`\nSuccessfully added new employee to the employee table.\n`);
                   viewEmployees();
                 })
               })
@@ -296,7 +296,7 @@ const updateEmployee = () => {
           console.log("An error has occurred.");
           return;
         }
-        console.log("Employee information has been successfully updated.");
+        console.log("\nEmployee information has been successfully updated.\n");
         viewEmployees();
       })
       })
