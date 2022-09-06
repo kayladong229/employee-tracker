@@ -79,7 +79,7 @@ const viewRoles = () => {
 
 // // Function to view all employees
 const viewEmployees = () => {
-  db.query("SELECT * FROM employee", (err, results) => {
+  db.query("SELECT employee.id AS id, employee.first_name AS first_name, employee.last_name AS last_name, role.title AS title, role.department_id AS department_id, role.salary AS salary, employee.manager_id AS manager_id FROM employee JOIN role ON employee.id = role.id", (err, results) => {
     console.table('\nAll employees: ', results);
     startApp();
   })
@@ -232,7 +232,10 @@ const addEmployee = () => {
                     return;
                   }
                   console.log(`\nSuccessfully added new employee to the employee table.\n`);
-                  viewEmployees();
+                  db.query('SELECT first_name, last_name, role_id, manager_id FROM employee', (err, result) => {
+                    console.table(result);
+                    startApp();
+                  });
                 })
               })
           })
@@ -297,7 +300,10 @@ const updateEmployee = () => {
           return;
         }
         console.log("\nEmployee information has been successfully updated.\n");
-        viewEmployees();
+        db.query('SELECT first_name, last_name, role_id FROM employee', (err, result) => {
+          console.table(result);
+          startApp();
+        });
       })
       })
     })
