@@ -110,58 +110,58 @@ const addDepartment = () => {
 
 // // Function to add a role
 const addRole = () => {
-  db.query('SELECT * FROM department', (err, result) => {
-    if (err) {
-      console.log("An error has occurred.");
-      return;
-    }
-    return inquirer
-      .prompt([
-        {
-          type: 'input',
-          name: 'roleName',
-          message: "What is the name of your new role?"
-        },
-        {
-          type: 'input',
-          name: 'salary',
-          message: "What is the annual salary for this role?"
-        },
-        {
-          type: 'list',
-          name: 'department',
-          message: "What department is this role under?",
-          choices: function() {
-            let departmentArray = [];
-            for (let i = 0; i < result.length; i++) {
-            departmentArray.push(result[i].name);
-          }
-          return departmentArray;
-          }
-        }
-    ])
+  return inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'roleName',
+        message: "What is the name of your new role?"
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: "What is the annual salary for this role?"
+      },
+      ])
     .then (answer => {
-      let department_id;
-      for (let j = 0; j < result.length; j++) {
-        if (result[j].name == answer.department) {
-          department_id = result[j].id;
+      let params = [answer.roleName, answer.salary];
+
+      db.query('SELECT * FROM department', (err, result) => {
+        if (err) {
+          console.log("An error has occurred.");
+          return;
         }
-      }
-  
-      db.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', 
-        [answer.roleName, answer.salary, department_id], 
-        (err, result) => {
-          if (err) {
-            console.log("An error has occurred.");
-            return;
-          }
-        console.log(`\nSuccessfully added ${answer.roleName} to the role table.\n`);
-        // Log updated role table to console
-        viewRoles();
+
+        const departments = result.map(({ name, id }) => ({ name: name, value: id }));
+
+        return inquirer
+          .prompt([
+            {
+              type: 'list',
+              name: 'department',
+              message: "What department is this role under?",
+              choices: departments
+            }
+          ])
+          .then (answer => {
+            const department = answer.department;
+            params.push(department);
+
+            db.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', 
+            params, 
+            (err, result) => {
+              if (err) {
+                console.log("An error has occurred.");
+                return;
+              }
+            console.log(`\nThe new role has been successfully added to the role table.\n`);
+            // Log updated role table to console
+            viewRoles();
+          })
         })
       })
     })
-};
+}
 
 // Function to add an employee
 const addEmployee = () => {
@@ -179,7 +179,7 @@ const addEmployee = () => {
     }
   ])
   .then(answer => {
-    const params = [answer.firstName, answer.lastName];
+    let params = [answer.firstName, answer.lastName];
 
     // Acquire roles from role table
     db.query('SELECT * FROM role', (err, result) => {
